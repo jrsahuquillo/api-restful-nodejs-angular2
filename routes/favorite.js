@@ -9,6 +9,6 @@ api.get('/favorite/:id', favoriteController.getFavorite)
 api.get('/favorites', favoriteController.getFavorites)
 api.post('/favorite', favoriteController.saveFavorite)
 api.put('/favorite/:id', favoriteController.updateFavorite)
-api.delete('/favorite', favoriteController.deleteFavorite)
+api.delete('/favorite/:id', favoriteController.deleteFavorite)
 
 module.exports = api
