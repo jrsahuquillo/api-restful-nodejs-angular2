@@ -1,8 +1,14 @@
 'use strict'
 
 const express = require('express')
-const app = express()
+const bodyParser = require('body-parser')
 
-app.listen(3678, function() {
-  console.log('✅ ✅ ✅ Favorites API REST running on http://localhost:3678')
-});
+const app = express()
+const port = process.env.PORT || 3678
+
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
+
+app.listen(port, function() {
+  console.log(`✅ ✅ ✅ Favorites API REST running on http://localhost:${port}`)
+})
