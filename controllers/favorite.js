@@ -50,8 +50,15 @@ function saveFavorite(req, res) {
 }
 
 function updateFavorite(req, res) {
-  let params = req.body
-  res.status(200).send({update: true, favorite: params})
+  let favoriteId = req.params.id
+  let update = req.body
+
+  Favorite.findByIdAndUpdate(favoriteId, update, (err, favoriteUpdated) => {
+    if(err) {
+      res.status(500).send({message: 'Updating error in server'})
+    }
+    res.status(200).send({favorite: favoriteUpdated})
+  })
 }
 
 function deleteFavorite(req, res) {
