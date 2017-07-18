@@ -12,11 +12,13 @@ function getFavorite(req, res) {
   Favorite.findById(favoriteId, function(err, favorite) {
     if(err) {
       res.status(500).send({message: 'Data return error'})
+    } else {
+      if(!favorite){
+        res.status(404).send({message: 'Empty data'})
+      } else {
+        res.status(200).send({favorite})
+      }
     }
-    if(!favorite){
-      res.status(404).send({message: 'Empty data'})
-    }
-    res.status(200).send({favorite})
   })
 }
 
@@ -24,13 +26,14 @@ function getFavorites(req, res) {
   Favorite.find().sort('title').exec((err, favorites) => {
     if(err) {
       res.status(500).send({message: 'Data return error'})
+    } else {
+      if(!favorites){
+        res.status(404).send({message: 'Empty data'})
+      } else {
+        res.status(200).send({favorites})
+      }
     }
-    if(!favorites){
-      res.status(404).send({message: 'Empty data'})
-    }
-    res.status(200).send({favorites})
   })
-
 }
 
 function saveFavorite(req, res) {
@@ -44,8 +47,9 @@ function saveFavorite(req, res) {
   favorite.save((err, favoriteStored) => {
     if(err) {
       res.status(500).send({message: 'Saving error in server'})
+    } else {
+      res.status(200).send({favorite: favoriteStored})
     }
-    res.status(200).send({favorite: favoriteStored})
   })
 }
 
@@ -56,8 +60,9 @@ function updateFavorite(req, res) {
   Favorite.findByIdAndUpdate(favoriteId, update, (err, favoriteUpdated) => {
     if(err) {
       res.status(500).send({message: 'Updating error in server'})
+    } else {
+      res.status(200).send({favorite: favoriteUpdated})
     }
-    res.status(200).send({favorite: favoriteUpdated})
   })
 }
 
