@@ -8,7 +8,16 @@ function test(req, res) {
 
 function getFavorite(req, res) {
   let favoriteId = req.params.id
-  res.status(200).send({data: favoriteId})
+
+  Favorite.findById(favoriteId, function(err, favorite) {
+    if(err) {
+      res.status(500).send({message: 'Data return error'})
+    }
+    if(!favorite){
+      res.status(404).send({message: 'Empty data'})
+    }
+    res.status(200).send({favorite})
+  })
 }
 
 function getFavorites(req, res) {
