@@ -1,4 +1,5 @@
 'use strict'
+const Favorite = require('../models/favorite')
 
 function test(req, res) {
   var name = req.params.name || `my friend`;
@@ -15,8 +16,19 @@ function getFavorites(req, res) {
 }
 
 function saveFavorite(req, res) {
+  let favorite = new Favorite()
   let params = req.body
-  res.status(200).send({favorite: params})
+
+  favorite.title = params.title
+  favorite.description = params.description
+  favorite.url = params.url
+
+  favorite.save((err, favoriteStored) => {
+    if(err) {
+      res.status(500).send({message: 'Saving error'})
+    }
+    res.status(200).send({favorite: favoriteStored})
+  })
 }
 
 function updateFavorite(req, res) {
