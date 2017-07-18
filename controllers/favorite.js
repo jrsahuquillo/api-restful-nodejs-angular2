@@ -12,6 +12,15 @@ function getFavorite(req, res) {
 }
 
 function getFavorites(req, res) {
+  Favorite.find().sort('title').exec((err, favorites) => {
+    if(err) {
+      res.status(500).send({message: 'Data return error'})
+    }
+    if(!favorites){
+      res.status(404).send({message: 'Empty data'})
+    }
+    res.status(200).send({favorites})
+  })
 
 }
 
@@ -25,7 +34,7 @@ function saveFavorite(req, res) {
 
   favorite.save((err, favoriteStored) => {
     if(err) {
-      res.status(500).send({message: 'Saving error'})
+      res.status(500).send({message: 'Saving error in server'})
     }
     res.status(200).send({favorite: favoriteStored})
   })
